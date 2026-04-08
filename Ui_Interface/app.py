@@ -24,6 +24,6 @@ if st.button("查询"):
     rate = get_rate(date, base, target)
 
     if rate:
-        st.success(f"{base} → {target} = {rate}")
+        st.success(f"{base} 兑换 {target} 汇率是 {rate}")
     else:
         st.error("查询失败，请检查数据")
