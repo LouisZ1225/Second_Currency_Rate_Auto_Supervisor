@@ -14,6 +14,16 @@ def get_rate(date, base, target):
     if base == target:
         return 1.0
     
+    if base == "USD":
+        usd_to_base = 1.0
+    else:
+        usd_to_base = query_rate(date, base)
+    
+    if target == "USD":
+        usd_to_target = 1.0
+    else:
+        usd_to_target = query_rate(date, target)
+    
     usd_to_base = query_rate(date, base)
     usd_to_target = query_rate(date, target)
     
