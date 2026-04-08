@@ -1,2 +1,3 @@
 Config/.env
 Database/FX_RATES.db
+Database/__pycache__/query.cpython-313.pyc
