@@ -29,5 +29,3 @@ def get_rate(date, base, target):
         return None
     
     return usd_to_target / usd_to_base
-
-print(get_rate("2026-03-01", "USD", "CNY"))
