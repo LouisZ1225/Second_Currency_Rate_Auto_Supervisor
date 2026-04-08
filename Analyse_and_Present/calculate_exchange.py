@@ -24,11 +24,10 @@ def get_rate(date, base, target):
     else:
         usd_to_target = query_rate(date, target)
     
-    usd_to_base = query_rate(date, base)
-    usd_to_target = query_rate(date, target)
-    
     if usd_to_base is None or usd_to_target is None:
         print(f"⚠无法计算: {base} -> {target}")
         return None
     
     return usd_to_target / usd_to_base
+
+print(get_rate("2026-03-01", "USD", "CNY"))
