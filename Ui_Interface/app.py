@@ -15,7 +15,7 @@ st.title("💱 Louis的汇率查询助手")
 
 date = st.date_input("日期(YYYY-MM-DD)", "2026-04-08")
 base = st.selectbox("基准货币", ["USD", "EUR", "GBP", "CNY", "JPY"])
-target = st.selectbox("目标货币", ["USD", "EUR", "GBP", "CNY", "JPY"])
+target = st.selectbox("目标货币", ["CNY", "USD", "EUR", "GBP", "JPY"])
 
 # ===== 交互模块 ======
 
