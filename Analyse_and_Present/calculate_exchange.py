@@ -2,10 +2,10 @@
 
 import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"..")))
 
 # ===== 配置模块 ======
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"..")))
 from Database.query import query_rate
 
 # ===== 数据计算模块 ======
