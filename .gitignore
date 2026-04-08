@@ -1,4 +1,3 @@
 Config/.env
-Database/FX_RATES.db
 Database/__pycache__/query.cpython-313.pyc
 Analyse_and_Present/__pycache__/calculate_exchange.cpython-313.pyc
