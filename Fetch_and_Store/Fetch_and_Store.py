@@ -49,13 +49,15 @@ def fetch_data(API_URL):
     response = requests.get(API_URL)
     data = response.json()
 
-    today = datetime.now().strftime("%Y-%m-%d")
+    api_timr = data.get("time_last_update_utc", "")
+    api_date = datetime.strptime(api_timr, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
+
     base = data["base_code"]
     rates = data["conversion_rates"]
 
-    records = [(today, base, target, rate) for target, rate in rates.items()]
+    records = [(api_date, base, target, rate) for target, rate in rates.items()]
 
-    return today, records
+    return api_date, records
 
 # ===== 数据存储模块 ======
 
