@@ -1,0 +1,35 @@
+name: Daily Fetch Rates Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  update:
+    runs-on:ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python install -r requirements.txt
+        
+      - name: run update script
+        run: |
+          python Fetch_and_Store/Fetch_and_Store.py
+
+        - name: Commit and push changes
+        run: |
+          git config --global user.name "LouisZ1225"
+          git config --global user.email "zhanggz1225@gmail.com"
+          git add Database/FX_RATES.db
+          git commit -m "Auto update FX rates" || echo "No changes"
+          git push
