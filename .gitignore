@@ -1,3 +1,6 @@
 Config/.env
 Database/__pycache__/query.cpython-313.pyc
 Analyse_and_Present/__pycache__/calculate_exchange.cpython-313.pyc
+Database/__pycache__/query.cpython-312.pyc
+.gitignore
+Analyse_and_Present/__pycache__/calculate_exchange.cpython-312.pyc
