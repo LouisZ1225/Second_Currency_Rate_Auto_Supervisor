@@ -28,7 +28,7 @@ jobs:
         run: |
           python Fetch_and_Store/Fetch_and_Store.py
 
-        - name:  Commit and push changes
+      - name:  Commit and push changes
         run: |
           git config --global user.name "LouisZ1225"
           git config --global user.email "zhanggz1225@gmail.com"
