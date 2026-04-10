@@ -130,8 +130,8 @@ def main():
     config = load_config()
     init_db(config["db_path"])
 
-    start_date = "2025-02-19"
-    end_date = "2026-04-05"
+    start_date = "2026-04-09"
+    end_date = "2026-04-09"
 
     current = datetime.strptime(start_date, "%Y-%m-%d")
     end = datetime.strptime(end_date, "%Y-%m-%d")
