@@ -23,6 +23,8 @@ jobs:
           python install -r requirements.txt
         
       - name: run update script
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
           python Fetch_and_Store/Fetch_and_Store.py
 
