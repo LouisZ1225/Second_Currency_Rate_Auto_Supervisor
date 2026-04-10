@@ -32,7 +32,7 @@ if st.button("查询"):
     rate = get_rate(data, base, target)
     
     if date == china_today and rate is None:
-        st.warning("⚠️ 今日汇率数据尚未更新，请于每日8:30am再试")
+        st.warning("⚠️ 今日汇率数据尚未更新，请于每日早晨8:30再试")
     
     elif rate is not None:
             st.success(f"{base} 兑换 {target} 汇率是 {rate:.4f}")
