@@ -12,11 +12,6 @@ from Database.query import query_rate
 
 def get_rate(date, base, target):
 
-    test = query_rate(date, "USD")
-
-    if test is None:
-        return None
-
     if base == target:
         return 1.0
     

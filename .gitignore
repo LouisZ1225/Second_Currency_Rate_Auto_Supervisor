@@ -6700,3 +6700,8 @@ venv/lib/python3.9/site-packages/python_dotenv-1.2.1.dist-info/top_level.txt
 venv/lib/python3.9/site-packages/python_dotenv-1.2.1.dist-info/WHEEL
 venv/lib/python3.9/site-packages/python_dotenv-1.2.1.dist-info/licenses/LICENSE
 .vscode/settings.json
+venv/lib/python3.9/site-packages/pandas-2.3.3.dist-info/REQUESTED
+.gitignore
+.gitignore
+venv/lib/python3.9/site-packages/pytz-2026.1.post1.dist-info/REQUESTED
+venv/lib/python3.9/site-packages/requests-2.32.5.dist-info/REQUESTED
