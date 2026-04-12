@@ -2,10 +2,10 @@ name: Daily Fetch Rates Update
 
 on:
   schedule:
-    - cron: "03 0 * * *" # Runs every day at midnight UTC
-    - cron: "30 0 * * *" # Runs every day at midnight UTC
-    - cron: "00 1 * * *"
-    - cron: "30 1 * * *"
+    - cron: "03 22 * * *" # Runs every day at midnight UTC
+    - cron: "30 22 * * *" # Runs every day at midnight UTC
+    - cron: "03 23 * * *"
+    - cron: "30 23 * * *"
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
