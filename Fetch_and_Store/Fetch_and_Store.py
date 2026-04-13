@@ -24,14 +24,14 @@ def load_config():
         raise ValueError("❌ API_KEY 未找到，请检查 Config/.env 文件")
 
     API_URL= f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/USD"
-    DB_NAME = os.path.join(BASE_DIR, "Database", "FX_RATES.db")
+    DB_PATH = os.path.join(BASE_DIR, "Database", "FX_RATES.db")
 
-    return API_URL, DB_NAME
+    return API_URL, DB_PATH
 
 # ===== 初始化模块 ======
 
-def init_db(DB_NAME): 
-    with sqlite3.connect(DB_NAME) as conn:
+def init_db(DB_PATH): 
+    with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute("""
     CREATE TABLE IF NOT EXISTS fx_rates (
@@ -49,8 +49,8 @@ def fetch_data(API_URL):
     response = requests.get(API_URL)
     data = response.json()
 
-    api_timr = data.get("time_last_update_utc", "")
-    api_date = datetime.strptime(api_timr, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
+    api_time = data.get("time_last_update_utc", "")
+    api_date = datetime.strptime(api_time, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
 
     base = data["base_code"]
     rates = data["conversion_rates"]

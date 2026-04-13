@@ -6705,3 +6705,4 @@ venv/lib/python3.9/site-packages/pandas-2.3.3.dist-info/REQUESTED
 .gitignore
 venv/lib/python3.9/site-packages/pytz-2026.1.post1.dist-info/REQUESTED
 venv/lib/python3.9/site-packages/requests-2.32.5.dist-info/REQUESTED
+Fetch_and_Store/project/Config/.env
