@@ -5,6 +5,10 @@ Database/__pycache__/query.cpython-312.pyc
 .gitignore
 Analyse_and_Present/__pycache__/calculate_exchange.cpython-312.pyc
 .DS_Store
+__pycache__/
+*.pyc
+venv/
+D:\Python_Repository\Second_Currency_Rate_Auto_Supervisor\Fetch_and_Store\project\Database\FX_RATES.db
 venv/bin/activate
 venv/bin/activate.csh
 venv/bin/activate.fish
@@ -6733,3 +6737,7 @@ Fetch_and_Store/project/Service/__pycache__/service.cpython-312.pyc
 Fetch_and_Store/project/Store/__pycache__/store.cpython-312.pyc
 Fetch_and_Store/project/Clean/__pycache__/clean.cpython-312.pyc
 Fetch_and_Store/project/Clean/__pycache__/clean.cpython-312.pyc
+Fetch_and_Store/project/Database/FX_RATES.db
+Fetch_and_Store/project/Database/FX_RATES.db
+Fetch_and_Store/project/Database/FX_RATES.db
+Fetch_and_Store/project/Database/FX_RATES.db
