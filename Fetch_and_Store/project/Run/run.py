@@ -1,8 +1,15 @@
+from Loadconfig.loadconfig import load_config
 from Service.service import service
+from Test.test import output_data
 
-def run():
-    date, count = service()
-    print(f"✅ 更新完成: {date}, {count}条")
+def main():
+    print("Main 启动！")
+    
+    API_URL, DB_PATH = load_config()
+
+    service(API_URL,DB_PATH)
+    
+    output_data(DB_PATH)
 
 if __name__ == "__main__":
-    run()
+    main()

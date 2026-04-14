@@ -1,7 +1,9 @@
+
 import requests
 from datetime import datetime
 
 def fetch_data(API_URL):
+    print("Fetch 启动！")
     response = requests.get(API_URL)
     data = response.json()
 

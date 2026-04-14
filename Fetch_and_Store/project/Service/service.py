@@ -1,16 +1,20 @@
-from Loadconfig.loadconfig import load_config
 from Fetch.fetch import fetch_data
-from Clean.clean import clean_data
-from Store.store import store_data
 from Store.initiate_db import init_db
+from Store.store import store_data
+from Clean.clean import clean_data
 
-def service():
-    API_URL, DB_NAME = load_config()
 
-    init_db(DB_NAME)
+
+def service(API_URL, DB_PATH):
+
+    print("Service 启动！")
+
+    init_db(DB_PATH)
 
     date, records = fetch_data(API_URL)
 
-    store_data(DB_NAME, records)
+    store_data(DB_PATH, records)
 
-    return date,len(records)
+    clean_data(DB_PATH)
+
+    return date, records
