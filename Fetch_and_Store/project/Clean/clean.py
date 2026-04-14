@@ -1,19 +1,33 @@
-
-import sqlite3
 from datetime import datetime
 
-def clean_data(DB_PATH):
-    print("Clean 启动！")
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-        DELETE FROM FX_RATES
-        WHERE rate <=0
-        """)
+def clean_realtime_data(api_data):
+    if not api_data:
+        return []
 
-        cursor.execute("""
-        DELETE FROM FX_RATES
-        WHERE baseC = targetC AND rate != 1
-        """)
+    api_time = api_data.get("time_last_update_utc", "")
+    api_date = datetime.strptime(api_time, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
 
-        conn.commit()
+    base = api_data["base_code"]
+    rates = api_data["conversion_rates"]
+
+    records = [(api_date, base, target, rate) for target, rate in rates.items()]
+
+    return records
+
+
+def clean_historical_data(api_data):
+    if not api_data:
+        return []
+    
+    api_date = api_data.get("date")
+    date = datetime.strptime(api_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+    base = api_data.get("source")
+    quotes = api_data.get("quotes", {})
+
+    records = []
+
+    for pair, rate in quotes.items():
+        target = pair.replace(base, "")
+        records.append((date, base, target, rate))
+
+    return records

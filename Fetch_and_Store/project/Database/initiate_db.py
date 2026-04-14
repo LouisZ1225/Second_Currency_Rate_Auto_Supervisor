@@ -1,8 +1,6 @@
-
 import sqlite3
 
 def init_db(DB_PATH): 
-    print("init_DB 启动！")
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute("""

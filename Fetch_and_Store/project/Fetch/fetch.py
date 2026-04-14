@@ -1,18 +1,31 @@
-
 import requests
-from datetime import datetime
 
-def fetch_data(API_URL):
-    print("Fetch 启动！")
-    response = requests.get(API_URL)
-    data = response.json()
+# ===== 获取实时数据 ======
 
-    api_time = data.get("time_last_update_utc", "")
-    api_date = datetime.strptime(api_time, "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d")
+def fetch_present_data(API_URL, API_KEY):
 
-    base = data["base_code"]
-    rates = data["conversion_rates"]
+    url = f"{API_URL}/v6/{API_KEY}/latest/USD"
 
-    records = [(api_date, base, target, rate) for target, rate in rates.items()]
+    response = requests.get(url)
+    api_data = response.json()
 
-    return api_date, records
+    return api_data
+
+# ===== 获取历史数据 ======
+
+def fetch_historical_data(API_URL, API_KEY, date):
+
+    url = f"{API_URL}/historical"
+    params = {
+        "access_key": API_KEY,
+        "date": date
+    }
+
+    response = requests.get(url, params=params)
+    api_data = response.json()
+
+    if not api_data.get("quotes"):
+        print(f"⚠无数据: {date}")
+        return None
+
+    return api_data
