@@ -1,5 +1,5 @@
 from Database.query import query_rate
-from Project.Calculate.calculate_exchange import get_rate
+from Calculate.calculate_exchange import get_rate
 
 import os
 

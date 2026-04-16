@@ -1,5 +1,5 @@
-from Project.Loadconfig.loadconfig import load_config
-from Project.Service.service_fetch import service_realtime, service_history
+from Loadconfig.loadconfig import load_config
+from Service.service_fetch import service_realtime, service_history
 
 import sys
 
