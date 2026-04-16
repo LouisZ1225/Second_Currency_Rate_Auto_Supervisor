@@ -3,6 +3,7 @@ from Database.initiate_db import init_db
 from Store.store import store_data
 from Clean.clean import clean_realtime_data, clean_historical_data
 from Database.query import test_data
+
 from datetime import datetime, timedelta
 import time
 

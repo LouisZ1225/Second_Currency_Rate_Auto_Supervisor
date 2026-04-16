@@ -1,5 +1,6 @@
 from Loadconfig.loadconfig import load_config
-from Service.service import service_realtime, service_history
+from Service.service_fetch import service_realtime, service_history
+
 import sys
 
 def main():
