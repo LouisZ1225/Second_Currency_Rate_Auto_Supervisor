@@ -21,8 +21,11 @@ def query_rate(DB_PATH, date, currency):
 
 def test_data(DB_PATH):
     with sqlite3.connect(DB_PATH) as conn:
-        test_result = pd.read_sql_query(
-                   "SELECT * FROM FX_RATES LIMIT 5",
+        test_result = pd.read_sql_query("""
+                   SELECT * FROM FX_RATES
+                   ORDER BY date DESC
+                   LIMIT 5
+                   """,
                    conn
         )
         print(test_result)
