@@ -1,34 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <title>Louis的汇率看板</title>
-    <link rel="stylesheet" 
-          href="../css/converter.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Louis的汇率查询工具</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/converter.css"
+    >
 </head>
 
 <body>
 
+    <!-- 顶部导航栏 -->
     <nav class="navbar">
 
-    <div class="logo">
-        Louis的汇率看板
-    </div>
+        <div class="logo">
+            Louis的汇率看板
+        </div>
 
-    <ul class="nav-menu">
-        <li><a href="../index.html">企业汇率看板</a></li>
-        <li><a href="./converter.html">汇率查询工具</a></li>
-        <li><a href="./database.html">数据库可视化</a></li>
-    </ul>
+        <ul class="nav-menu">
+            <li>
+                <a href="/">
+                    企业汇率看板
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="/converter"
+                    class="active"
+                >
+                    汇率查询工具
+                </a>
+            </li>
+
+            <li>
+                <a href="/database">
+                    数据库可视化
+                </a>
+            </li>
+        </ul>
 
     </nav>
 
-    <div id="course-list"
-         class="course-grid">
-    </div>
 
-    <script src="../js/course.js"></script>
+    <!-- 页面主体 -->
+    <main class="page-container">
+
+        <!-- 页面标题 -->
+        <section class="page-header">
+
+            <div>
+                <p class="page-label">
+                    CURRENCY CONVERTER
+                </p>
+
+                <h1>
+                    💱 Louis的汇率查询助手
+                </h1>
+
+                <p class="page-description">
+                    查询指定日期任意两种货币之间的历史汇率
+                </p>
+            </div>
+
+            <div class="update-badge">
+                数据每日 08:00 更新
+            </div>
+
+        </section>
+
+
+        <!-- 汇率查询卡片 -->
+        <section class="converter-card">
+
+            <div class="form-grid">
+
+                <!-- 日期 -->
+                <div class="form-group">
+
+                    <label for="query-date">
+                        查询日期
+                    </label>
+
+                    <input
+                        type="date"
+                        id="query-date"
+                    >
+
+                </div>
+
+
+                <!-- 基准货币 -->
+                <div class="form-group">
+
+                    <label for="base-currency">
+                        基准货币
+                    </label>
+
+                    <select id="base-currency">
+                    </select>
+
+                </div>
+
+
+                <!-- 交换按钮 -->
+                <div class="swap-container">
+
+                    <button
+                        id="swap-button"
+                        class="swap-button"
+                        type="button"
+                        title="交换基准货币和目标货币"
+                    >
+                        ⇄
+                    </button>
+
+                </div>
+
+
+                <!-- 目标货币 -->
+                <div class="form-group">
+
+                    <label for="target-currency">
+                        目标货币
+                    </label>
+
+                    <select id="target-currency">
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- 查询按钮 -->
+            <button
+                id="query-button"
+                class="query-button"
+                type="button"
+            >
+                查询汇率
+            </button>
+
+
+            <!-- 查询状态 -->
+            <div
+                id="message-box"
+                class="message-box hidden"
+                aria-live="polite"
+            >
+            </div>
+
+
+            <!-- 查询结果 -->
+            <section
+                id="result-panel"
+                class="result-panel hidden"
+            >
+
+                <p class="result-date">
+                    查询日期：
+                    <span id="result-date"></span>
+                </p>
+
+                <div class="currency-pair">
+
+                    <div class="currency-item">
+                        <span
+                            id="base-flag"
+                            class="currency-flag"
+                        >
+                        </span>
+
+                        <span id="base-code">
+                        </span>
+                    </div>
+
+                    <span class="pair-arrow">
+                        →
+                    </span>
+
+                    <div class="currency-item">
+                        <span
+                            id="target-flag"
+                            class="currency-flag"
+                        >
+                        </span>
+
+                        <span id="target-code">
+                        </span>
+                    </div>
+
+                </div>
+
+                <p class="rate-label">
+                    汇率
+                </p>
+
+                <p
+                    id="rate-value"
+                    class="rate-value"
+                >
+                </p>
+
+                <p
+                    id="rate-description"
+                    class="rate-description"
+                >
+                </p>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
     <script src="../js/converter.js"></script>
 
 </body>

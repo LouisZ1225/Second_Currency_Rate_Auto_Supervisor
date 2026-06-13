@@ -1,141 +1,473 @@
-/* 全局 */
+/* ===== 全局设置 ===== */
 
-body{
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    margin:0;
-
+body {
+    min-height: 100vh;
     font-family:
-    Arial,
-    "PingFang SC",
-    sans-serif;
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Microsoft YaHei",
+        Arial,
+        sans-serif;
 
-    background:white;
-
+    color: #1f2937;
+    background:
+        linear-gradient(
+            135deg,
+            #eef4ff 0%,
+            #f8fafc 50%,
+            #edfdf7 100%
+        );
 }
 
-.page-title{
 
-    text-align:center;
+/* ===== 导航栏 ===== */
 
-    font-size:42px;
+.navbar {
+    min-height: 72px;
+    padding: 0 6%;
 
-    color:#1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    margin-top:40px;
-
-}
-
-.course-card{
-
-    background:white;
-
-    padding:20px;
-
-    border-radius:12px;
+    color: #ffffff;
+    background: #12355b;
 
     box-shadow:
-    0 2px 10px
-    rgba(0,0,0,0.08);
-
+        0 4px 18px
+        rgba(15, 23, 42, 0.16);
 }
 
-.course-grid{
+.logo {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
 
-    display:grid;
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    list-style: none;
+}
+
+.nav-menu a {
+    position: relative;
+
+    padding: 24px 0;
+
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: #ffffff;
+}
+
+.nav-menu a.active::after {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    left: 0;
+
+    height: 3px;
+
+    content: "";
+
+    border-radius: 10px;
+    background: #43d9ad;
+}
+
+
+/* ===== 页面布局 ===== */
+
+.page-container {
+    width: min(1120px, 92%);
+    margin: 0 auto;
+    padding: 56px 0 90px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.page-label {
+    margin-bottom: 10px;
+
+    color: #2f80ed;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.page-header h1 {
+    margin-bottom: 12px;
+
+    color: #102a43;
+
+    font-size: clamp(30px, 4vw, 46px);
+    line-height: 1.2;
+}
+
+.page-description {
+    color: #64748b;
+    font-size: 16px;
+}
+
+.update-badge {
+    padding: 10px 16px;
+
+    color: #087f5b;
+    background: #dff8ef;
+    border: 1px solid #b7efdc;
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* ===== 查询卡片 ===== */
+
+.converter-card {
+    padding: 34px;
+
+    background:
+        rgba(255, 255, 255, 0.92);
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.24);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 18px 50px
+        rgba(15, 23, 42, 0.10);
+
+    backdrop-filter: blur(14px);
+}
+
+.form-grid {
+    display: grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        minmax(180px, 1fr)
+        minmax(210px, 1fr)
+        58px
+        minmax(210px, 1fr);
 
-    gap:25px;
-
-    max-width:1400px;
-
-    margin:auto;
-
-    padding:20px;
+    align-items: end;
+    gap: 20px;
 }
 
-.course-cover{
-
-    width:100%;
-
-    height:225px;
-
-    object-fit:cover;
-
-    border-radius:10px;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
 }
 
-.banner img{
+.form-group label {
+    color: #334155;
 
-    width:100%;
-
-    height:250px;
-
-    object-fit:cover;
-
+    font-size: 14px;
+    font-weight: 650;
 }
 
-.navbar{
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 48px;
 
-    background:#0c439a;
+    padding: 0 14px;
 
-    color:white;
+    color: #1e293b;
+    background: #ffffff;
 
-    display:flex;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
 
-    justify-content:space-between;
+    font-size: 15px;
 
-    align-items:center;
+    outline: none;
 
-    padding:15px 40px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.logo{
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2f80ed;
 
-    font-size:28px;
-
-    font-weight:bold;
+    box-shadow:
+        0 0 0 4px
+        rgba(47, 128, 237, 0.12);
 }
 
-.nav-menu{
 
-    display:flex;
+/* ===== 交换按钮 ===== */
 
-    list-style:none;
-
-    gap:30px;
+.swap-container {
+    display: flex;
+    justify-content: center;
 }
 
-.nav-menu li{
+.swap-button {
+    width: 46px;
+    height: 46px;
 
-    cursor:pointer;
-}
+    color: #175cd3;
+    background: #edf4ff;
 
-.nav-menu a{
+    border: 1px solid #c8dcff;
+    border-radius: 50%;
 
-    text-decoration:none;
-
-    color:white;
-
-    font-weight:500;
-}
-
-.nav-menu a:hover{
-
-    color:#ffd700;
-}
-
-.course-card {
+    font-size: 24px;
 
     cursor: pointer;
 
-    transition: all 0.3s;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
-.course-card:hover {
+.swap-button:hover {
+    background: #dceaff;
+    transform: rotate(180deg);
+}
 
-    transform: translateY(-5px);
 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+/* ===== 查询按钮 ===== */
+
+.query-button {
+    width: 100%;
+    height: 52px;
+
+    margin-top: 26px;
+
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #175cd3,
+            #2f80ed
+        );
+
+    border: none;
+    border-radius: 11px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px
+        rgba(47, 128, 237, 0.25);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.query-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 26px
+        rgba(47, 128, 237, 0.30);
+}
+
+.query-button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+
+/* ===== 消息提示 ===== */
+
+.message-box {
+    margin-top: 22px;
+    padding: 14px 16px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.message-box.loading {
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.message-box.warning {
+    color: #92400e;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+}
+
+.message-box.error {
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+
+/* ===== 查询结果 ===== */
+
+.result-panel {
+    margin-top: 28px;
+    padding: 28px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #f1fbf8
+        );
+
+    border: 1px solid #d7e5f5;
+    border-radius: 18px;
+}
+
+.result-date {
+    margin-bottom: 22px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.currency-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+}
+
+.currency-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #102a43;
+
+    font-size: 24px;
+    font-weight: 750;
+}
+
+.currency-flag {
+    font-size: 30px;
+}
+
+.pair-arrow {
+    color: #94a3b8;
+    font-size: 25px;
+}
+
+.rate-label {
+    margin-top: 25px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.rate-value {
+    margin-top: 7px;
+
+    color: #0f766e;
+
+    font-size: clamp(38px, 6vw, 58px);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.rate-description {
+    margin-top: 9px;
+    color: #475569;
+    font-size: 15px;
+}
+
+
+/* ===== 通用工具类 ===== */
+
+.hidden {
+    display: none;
+}
+
+
+/* ===== 移动端 ===== */
+
+@media (max-width: 860px) {
+
+    .navbar {
+        padding: 18px 5%;
+
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .nav-menu {
+        width: 100%;
+
+        gap: 18px;
+
+        overflow-x: auto;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 8px 0;
+        white-space: nowrap;
+    }
+
+    .nav-menu a.active::after {
+        bottom: 0;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .swap-container {
+        order: 3;
+    }
+
+    .swap-button {
+        transform: rotate(90deg);
+    }
+
+    .swap-button:hover {
+        transform: rotate(270deg);
+    }
 }

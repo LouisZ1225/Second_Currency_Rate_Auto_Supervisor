@@ -4,3 +4,5 @@ requests
 dotenv
 pytz
 apscheduler
+fastapi
+uvicorn

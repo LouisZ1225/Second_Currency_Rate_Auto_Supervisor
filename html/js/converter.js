@@ -1,30 +1,310 @@
-const courseList = document.getElementById("course-list");
+// ===== 货币配置 =====
 
-const tradeCourses =
-    courses.filter(
-        course => course.category === "trade"
+const CURRENCY_META = {
+    USD: { name: "美元", flag: "🇺🇸" },
+    EUR: { name: "欧元", flag: "🇪🇺" },
+    GBP: { name: "英镑", flag: "🇬🇧" },
+    AUD: { name: "澳元", flag: "🇦🇺" },
+    CAD: { name: "加拿大元", flag: "🇨🇦" },
+
+    CNY: { name: "人民币", flag: "🇨🇳" },
+    JPY: { name: "日元", flag: "🇯🇵" },
+    KRW: { name: "韩元", flag: "🇰🇷" },
+    HKD: { name: "港元", flag: "🇭🇰" },
+    TWD: { name: "新台币", flag: "🌏" },
+    RUB: { name: "俄罗斯卢布", flag: "🇷🇺" },
+    VND: { name: "越南盾", flag: "🇻🇳" },
+    THB: { name: "泰铢", flag: "🇹🇭" },
+    MMK: { name: "缅甸元", flag: "🇲🇲" },
+    SGD: { name: "新加坡元", flag: "🇸🇬" },
+    MYR: { name: "马来西亚林吉特", flag: "🇲🇾" },
+    INR: { name: "印度卢比", flag: "🇮🇳" },
+    PKR: { name: "巴基斯坦卢比", flag: "🇵🇰" },
+    IDR: { name: "印尼盾", flag: "🇮🇩" },
+
+    AED: { name: "阿联酋迪拉姆", flag: "🇦🇪" },
+    SAR: { name: "沙特里亚尔", flag: "🇸🇦" },
+    OMR: { name: "阿曼里亚尔", flag: "🇴🇲" },
+    QAR: { name: "卡塔尔里亚尔", flag: "🇶🇦" },
+    BHD: { name: "巴林第纳尔", flag: "🇧🇭" },
+
+    BRL: { name: "巴西雷亚尔", flag: "🇧🇷" },
+    ARS: { name: "阿根廷比索", flag: "🇦🇷" },
+    CUP: { name: "古巴比索", flag: "🇨🇺" },
+    CLP: { name: "智利比索", flag: "🇨🇱" },
+    PEN: { name: "秘鲁索尔", flag: "🇵🇪" },
+
+    KES: { name: "肯尼亚先令", flag: "🇰🇪" },
+    NGN: { name: "尼日利亚奈拉", flag: "🇳🇬" },
+    EGP: { name: "埃及镑", flag: "🇪🇬" },
+    TND: { name: "突尼斯第纳尔", flag: "🇹🇳" },
+    CDF: { name: "刚果法郎", flag: "🇨🇩" },
+    DZD: { name: "阿尔及利亚第纳尔", flag: "🇩🇿" },
+    BIF: { name: "布隆迪法郎", flag: "🇧🇮" },
+    GHS: { name: "加纳塞地", flag: "🇬🇭" },
+    SDG: { name: "苏丹镑", flag: "🇸🇩" },
+    TZS: { name: "坦桑尼亚先令", flag: "🇹🇿" },
+    UGX: { name: "乌干达先令", flag: "🇺🇬" },
+    AOA: { name: "安哥拉宽扎", flag: "🇦🇴" },
+    BWP: { name: "博茨瓦纳普拉", flag: "🇧🇼" },
+    ZAR: { name: "南非兰特", flag: "🇿🇦" }
+};
+
+
+// ===== 获取页面元素 =====
+
+const dateInput =
+    document.getElementById("query-date");
+
+const baseSelect =
+    document.getElementById("base-currency");
+
+const targetSelect =
+    document.getElementById("target-currency");
+
+const queryButton =
+    document.getElementById("query-button");
+
+const swapButton =
+    document.getElementById("swap-button");
+
+const messageBox =
+    document.getElementById("message-box");
+
+const resultPanel =
+    document.getElementById("result-panel");
+
+
+// ===== 获取北京时间日期 =====
+
+function getChinaToday() {
+    const formatter = new Intl.DateTimeFormat(
+        "en-CA",
+        {
+            timeZone: "Asia/Shanghai",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        }
     );
 
-tradeCourses.forEach(course => {
+    const parts = formatter.formatToParts(new Date());
 
-    const card = document.createElement("div");
-    card.className = "course-card";
+    const year = parts.find(
+        part => part.type === "year"
+    ).value;
 
-    card.innerHTML = `
-        <img src="${course.cover}" class="course-cover">
-        <h3>${course.title}</h3>
-        <p>${course.description}</p>
-    `;
+    const month = parts.find(
+        part => part.type === "month"
+    ).value;
 
-    card.addEventListener("click", () => {
-        openCourse(course.id);
-    });
+    const day = parts.find(
+        part => part.type === "day"
+    ).value;
 
-    courseList.appendChild(card);
-
-});
-
-function openCourse(id){
-    window.location.href =
-        `course.html?id=${id}`;
+    return `${year}-${month}-${day}`;
 }
+
+
+// ===== 初始化货币选择框 =====
+
+function populateCurrencySelect(selectElement) {
+    const options = Object.entries(CURRENCY_META)
+        .map(([code, item]) => {
+            return `
+                <option value="${code}">
+                    ${item.flag} ${code} - ${item.name}
+                </option>
+            `;
+        })
+        .join("");
+
+    selectElement.innerHTML = options;
+}
+
+
+function initializePage() {
+    populateCurrencySelect(baseSelect);
+    populateCurrencySelect(targetSelect);
+
+    baseSelect.value = "USD";
+    targetSelect.value = "CNY";
+
+    const chinaToday = getChinaToday();
+
+    dateInput.value = chinaToday;
+    dateInput.max = chinaToday;
+}
+
+
+// ===== 页面提示 =====
+
+function showMessage(message, type) {
+    messageBox.textContent = message;
+
+    messageBox.className =
+        `message-box ${type}`;
+
+    resultPanel.classList.add("hidden");
+}
+
+
+function hideMessage() {
+    messageBox.className =
+        "message-box hidden";
+
+    messageBox.textContent = "";
+}
+
+
+// ===== 显示查询结果 =====
+
+function showResult(data) {
+    hideMessage();
+
+    document.getElementById(
+        "result-date"
+    ).textContent = data.date;
+
+    document.getElementById(
+        "base-flag"
+    ).textContent =
+        CURRENCY_META[data.base]?.flag || "🌍";
+
+    document.getElementById(
+        "target-flag"
+    ).textContent =
+        CURRENCY_META[data.target]?.flag || "🌍";
+
+    document.getElementById(
+        "base-code"
+    ).textContent = data.base;
+
+    document.getElementById(
+        "target-code"
+    ).textContent = data.target;
+
+    document.getElementById(
+        "rate-value"
+    ).textContent =
+        Number(data.rate).toFixed(4);
+
+    document.getElementById(
+        "rate-description"
+    ).textContent =
+        `1 ${data.base} = `
+        + `${Number(data.rate).toFixed(4)} `
+        + `${data.target}`;
+
+    resultPanel.classList.remove("hidden");
+}
+
+
+// ===== 调用Python API =====
+
+async function queryExchangeRate() {
+    const queryDate = dateInput.value;
+    const baseCurrency = baseSelect.value;
+    const targetCurrency = targetSelect.value;
+
+    if (!queryDate) {
+        showMessage(
+            "请选择需要查询的日期。",
+            "warning"
+        );
+
+        return;
+    }
+
+    queryButton.disabled = true;
+    queryButton.textContent = "正在查询...";
+
+    showMessage(
+        "正在读取汇率数据库，请稍候。",
+        "loading"
+    );
+
+    try {
+        const params = new URLSearchParams({
+            date: queryDate,
+            base: baseCurrency,
+            target: targetCurrency
+        });
+
+        const response = await fetch(
+            `/api/rate?${params.toString()}`
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `服务器响应异常：${response.status}`
+            );
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+            showResult(result.data);
+            return;
+        }
+
+        showMessage(
+            result.message || "没有找到对应汇率数据。",
+            result.status === "pending"
+                ? "warning"
+                : "error"
+        );
+
+    } catch (error) {
+        console.error(error);
+
+        showMessage(
+            "无法连接汇率服务，请确认Python后端已经启动。",
+            "error"
+        );
+
+    } finally {
+        queryButton.disabled = false;
+        queryButton.textContent = "查询汇率";
+    }
+}
+
+
+// ===== 交换货币 =====
+
+function swapCurrencies() {
+    const currentBase = baseSelect.value;
+
+    baseSelect.value = targetSelect.value;
+    targetSelect.value = currentBase;
+
+    resultPanel.classList.add("hidden");
+    hideMessage();
+}
+
+
+// ===== 事件监听 =====
+
+queryButton.addEventListener(
+    "click",
+    queryExchangeRate
+);
+
+swapButton.addEventListener(
+    "click",
+    swapCurrencies
+);
+
+document.addEventListener(
+    "keydown",
+    event => {
+        if (event.key === "Enter") {
+            queryExchangeRate();
+        }
+    }
+);
+
+
+// ===== 启动页面 =====
+
+initializePage();

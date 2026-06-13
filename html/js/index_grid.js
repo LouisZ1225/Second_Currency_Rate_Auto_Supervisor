@@ -4,7 +4,7 @@ const courses = [
         category:"product",
         title: "第1期",
         description: "《主动谋划 体系推销 创造需求 ——产品方案整体介绍》",
-        cover: "./images/cover1.jpg",
+        cover: "../images/cover1.jpg",
         video: "../videos/sample1.mp4"
     },
     {
@@ -12,7 +12,7 @@ const courses = [
         category:"product",
         title: "第2期",
         description: "《雷达典型产品》",
-        cover: "./images/cover2.jpg",
+        cover: "../images/cover2.jpg",
         video: "../videos/sample2.mp4"
     },
     {
@@ -20,7 +20,7 @@ const courses = [
         category:"product",
         title: "第3期",
         description: "《区域防空预警系统》",
-        cover: "./images/cover3.jpg",
+        cover: "../images/cover3.jpg",
         video: "../videos/sample3.mp4"
     },
     {
@@ -28,7 +28,7 @@ const courses = [
         category:"product",
         title: "第4期",
         description: "《通信电子对抗系统》",
-        cover: "./images/cover4.jpg",
+        cover: "../images/cover4.jpg",
         video: "../videos/sample4.mp4"
     },
     {
@@ -36,7 +36,7 @@ const courses = [
         category:"product",
         title: "第5期",
         description: "《雷达电子对抗系统》",
-        cover: "./images/cover5.jpg",
+        cover: "../images/cover5.jpg",
         video: "../videos/sample1.mp4"
     },
     {
@@ -44,7 +44,7 @@ const courses = [
         category:"product",
         title: "第6期",
         description: "《网络安全运营中心SOC、网络靶场》",
-        cover: "./images/cover6.jpg",
+        cover: "../images/cover6.jpg",
         video: "../videos/sample2.mp4"
     },
     {
@@ -52,7 +52,7 @@ const courses = [
         category:"product",
         title: "第7期",
         description: "《开源情报中心、密码与加密》",
-        cover: "./images/cover7.jpg",
+        cover: "../images/cover7.jpg",
         video: "../videos/sample3.mp4"
     },
     {
@@ -60,7 +60,7 @@ const courses = [
         category:"product",
         title: "第8期",
         description: "《水陆无人装备、人工智能》",
-        cover: "./images/cover8.jpg",
+        cover: "../images/cover8.jpg",
         video: "../videos/sample4.mp4"
     },
     {
@@ -68,9 +68,9 @@ const courses = [
         category:"product",
         title: "第9期",
         description: "《国家防火墙》",
-        cover: "./images/cover9.jpg",
+        cover: "../images/cover9.jpg",
         video: "../videos/sample1.mp4"
-    },
+    }
 ];
 
 const params =
