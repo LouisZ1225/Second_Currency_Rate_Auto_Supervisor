@@ -1,49 +1,397 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Louis的汇率看板</title>
-    <link rel="stylesheet" 
-          href="./css/index.css">
+
+    <link
+        rel="stylesheet"
+        href="./css/index.css"
+    >
+
+    <!--
+        需要联网时可以使用 CDN。
+
+        如果项目部署在断网内网中，建议将 echarts.min.js
+        下载到 html/js/echarts.min.js，再修改为：
+
+        <script src="/js/echarts.min.js"></script>
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
 
 <body>
 
-
+    <!-- 顶部导航 -->
     <nav class="navbar">
 
-    <div class="logo">
-        Louis的汇率看板
-    </div>
+        <a
+            class="logo"
+            href="/"
+        >
+            <span class="logo-mark">L</span>
 
-<ul class="nav-menu">
-    <li>
-        <a href="/">
-            企业汇率看板
+            <span class="logo-text">
+                Louis的汇率看板
+            </span>
         </a>
-    </li>
 
-    <li>
-        <a href="/converter">
-            汇率查询工具
-        </a>
-    </li>
+        <ul class="nav-menu">
 
-    <li>
-        <a href="/database">
-            数据库可视化
-        </a>
-    </li>
-</ul>
+            <li>
+                <a
+                    href="/"
+                    class="active"
+                >
+                    企业汇率看板
+                </a>
+            </li>
+
+            <li>
+                <a href="/converter.html">
+                    汇率查询工具
+                </a>
+            </li>
+
+            <li>
+                <a href="/database.html">
+                    数据库可视化
+                </a>
+            </li>
+
+        </ul>
 
     </nav>
 
-    <div id="course-list"
-         class="course-grid">
-    </div>
 
-    <script src="./js/index_grid.js"></script>
+    <main class="dashboard-container">
+
+        <!-- 页面标题 -->
+        <section class="dashboard-header">
+
+            <div>
+                <p class="page-label">
+                    FOREIGN EXCHANGE MARKET
+                </p>
+
+                <h1>
+                    全球主要货币行情
+                </h1>
+
+                <p
+                    id="update-time"
+                    class="update-time"
+                >
+                    正在获取最新汇率数据……
+                </p>
+            </div>
+
+            <div class="market-status">
+                <span class="status-dot"></span>
+                <span>数据服务正常</span>
+            </div>
+
+        </section>
+
+
+        <!-- 汇率卡片 -->
+        <section
+            id="market-cards"
+            class="market-grid"
+        >
+            <div class="loading-card">
+                正在加载市场行情……
+            </div>
+        </section>
+
+
+        <!-- 主体内容 -->
+        <section class="dashboard-main">
+
+            <!-- 趋势图 -->
+            <article class="dashboard-panel chart-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <p class="panel-label">
+                            EXCHANGE RATE TREND
+                        </p>
+
+                        <h2 id="chart-title">
+                            USD/CNY 汇率趋势
+                        </h2>
+                    </div>
+
+                    <div class="chart-controls">
+
+                        <select
+                            id="pair-selector"
+                            aria-label="选择货币对"
+                        >
+                            <option value="USD-CNY">
+                                USD/CNY
+                            </option>
+
+                            <option value="EUR-CNY">
+                                EUR/CNY
+                            </option>
+
+                            <option value="GBP-CNY">
+                                GBP/CNY
+                            </option>
+
+                            <option value="JPY-CNY">
+                                JPY/CNY
+                            </option>
+
+                            <option value="HKD-CNY">
+                                HKD/CNY
+                            </option>
+
+                        </select>
+
+                        <div
+                            id="period-buttons"
+                            class="period-buttons"
+                        >
+                            <button
+                                type="button"
+                                data-days="7"
+                            >
+                                7日
+                            </button>
+
+                            <button
+                                type="button"
+                                data-days="30"
+                                class="active"
+                            >
+                                30日
+                            </button>
+
+                            <button
+                                type="button"
+                                data-days="90"
+                            >
+                                90日
+                            </button>
+
+                            <button
+                                type="button"
+                                data-days="365"
+                            >
+                                1年
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="chart-loading"
+                    class="chart-loading"
+                >
+                    正在加载趋势数据……
+                </div>
+
+                <div
+                    id="rate-chart"
+                    class="rate-chart"
+                ></div>
+
+            </article>
+
+
+            <!-- 右侧市场摘要 -->
+            <aside class="market-sidebar">
+
+                <article class="dashboard-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-label">
+                                MARKET SUMMARY
+                            </p>
+
+                            <h2>市场概览</h2>
+                        </div>
+                    </div>
+
+                    <div class="summary-list">
+
+                        <div class="summary-item">
+                            <span>货币对数量</span>
+
+                            <strong id="pair-count">
+                                --
+                            </strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>上涨货币对</span>
+
+                            <strong
+                                id="gainer-count"
+                                class="positive-text"
+                            >
+                                --
+                            </strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>下跌货币对</span>
+
+                            <strong
+                                id="loser-count"
+                                class="negative-text"
+                            >
+                                --
+                            </strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>最大涨幅</span>
+
+                            <strong
+                                id="max-gainer"
+                                class="positive-text"
+                            >
+                                --
+                            </strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>最大跌幅</span>
+
+                            <strong
+                                id="max-loser"
+                                class="negative-text"
+                            >
+                                --
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <article class="dashboard-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-label">
+                                TOP MOVERS
+                            </p>
+
+                            <h2>涨跌排行</h2>
+                        </div>
+                    </div>
+
+                    <div
+                        id="movers-list"
+                        class="movers-list"
+                    >
+                        <p class="empty-message">
+                            正在加载排行……
+                        </p>
+                    </div>
+
+                </article>
+
+            </aside>
+
+        </section>
+
+
+        <!-- 汇率数据表格 -->
+        <section class="dashboard-panel table-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <p class="panel-label">
+                        MARKET DATA
+                    </p>
+
+                    <h2>主要货币汇率</h2>
+                </div>
+
+                <div class="table-tools">
+
+                    <input
+                        id="pair-search"
+                        type="search"
+                        placeholder="搜索 USD、CNY、EUR……"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        id="refresh-button"
+                        type="button"
+                        class="refresh-button"
+                    >
+                        刷新数据
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="table-container">
+
+                <table class="rates-table">
+
+                    <thead>
+                        <tr>
+                            <th>货币对</th>
+                            <th>最新汇率</th>
+                            <th>前值</th>
+                            <th>涨跌额</th>
+                            <th>涨跌幅</th>
+                            <th>数据日期</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rates-table-body">
+
+                        <tr>
+                            <td
+                                colspan="6"
+                                class="table-message"
+                            >
+                                正在加载汇率数据……
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        <p>
+            Louis Exchange Rate Dashboard
+            · 数据仅用于学习和业务分析
+        </p>
+    </footer>
+
+
     <script src="./js/index.js"></script>
 
 </body>
