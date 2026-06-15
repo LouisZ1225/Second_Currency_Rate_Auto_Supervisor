@@ -531,3 +531,18 @@ a {
         transform: rotate(270deg);
     }
 }
+
+/* ==============================
+   页脚
+   ============================== */
+
+.footer {
+    padding: 24px;
+
+    color: var(--text-light);
+    text-align: center;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 13px;
+}

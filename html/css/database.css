@@ -226,3 +226,18 @@ a {
 
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+/* ==============================
+   页脚
+   ============================== */
+
+.footer {
+    padding: 24px;
+
+    color: var(--text-light);
+    text-align: center;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 13px;
+}
