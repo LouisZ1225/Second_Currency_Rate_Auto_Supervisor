@@ -184,7 +184,7 @@ a {
 
     color: #102a43;
 
-    font-size: clamp(30px, 4vw, 46px);
+    font-size: clamp(30px, 4vw, 40px);
     line-height: 1.2;
 }
 

@@ -30,7 +30,7 @@ INDEX_FILE = FRONTEND_DIR / "index.html"
 PAGES_DIR = FRONTEND_DIR / "html"
 
 CONVERTER_FILE = PAGES_DIR / "converter.html"
-DATABASE_FILE = PAGES_DIR / "database.html"
+DATABASE_FILE = PAGES_DIR / "report.html"
 COURSE_FILE = PAGES_DIR / "course.html"
 
 CSS_DIR = FRONTEND_DIR / "css"
@@ -56,15 +56,6 @@ for path in REQUIRED_PATHS:
         raise RuntimeError(
             f"文件或目录不存在：{path}"
         )
-
-
-print("=" * 70)
-print("[项目根目录]", BASE_DIR)
-print("[首页文件]", INDEX_FILE)
-print("[CSS 文件]", CSS_DIR / "index.css")
-print("[JS 文件]", JS_DIR / "index.js")
-print("=" * 70)
-
 
 # ==================================================
 # FastAPI 应用
@@ -394,7 +385,7 @@ def converter_page():
     include_in_schema=False
 )
 @app.get(
-    "/database.html",
+    "/report.html",
     include_in_schema=False
 )
 def database_page():

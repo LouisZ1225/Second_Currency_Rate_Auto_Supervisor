@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="基于近7日主要货币对数据生成汇率分析日报"
+    >
+
+    <title>汇率日报生成中心 | Louis汇率看板</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/report.css"
+    >
+</head>
+
+<body>
+
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+
+        <a
+            class="logo"
+            href="/"
+        >
+            <span class="logo-mark">L</span>
+
+            <span class="logo-text">
+                Louis汇率看板
+            </span>
+        </a>
+
+        <ul class="nav-menu">
+
+            <li>
+                <a href="/">
+                    企业汇率看板
+                </a>
+            </li>
+
+            <li>
+                <a href="/converter.html">
+                    汇率查询工具
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="/report.html"
+                    class="active"
+                >
+                    每日汇率日报
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- 页面主体 -->
+    <main class="report-workspace">
+
+        <!-- 页面标题与操作区 -->
+        <header class="page-header">
+
+            <div class="page-title-group">
+
+                <p class="page-eyebrow">
+                    DAILY FX REPORT
+                </p>
+
+                <h1>
+                    每日汇率分析报告
+                </h1>
+
+                <p class="page-description">
+                    从数据库提取主要货币对数据，
+                    自动完成统计分析、图表生成与大模型解读。
+                </p>
+
+            </div>
+
+            <div class="page-actions">
+
+                <button
+                    type="button"
+                    id="refresh-data-button"
+                    class="button button-secondary"
+                >
+                    刷新数据
+                </button>
+
+                <button
+                    type="button"
+                    id="generate-report-button"
+                    class="button button-primary"
+                >
+                    生成今日日报
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- 日报配置面板 -->
+        <section
+            class="report-control-panel"
+            aria-labelledby="report-control-title"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="section-kicker">
+                        REPORT SETTINGS
+                    </p>
+
+                    <h2 id="report-control-title">
+                        日报生成配置
+                    </h2>
+                </div>
+
+                <span
+                    id="data-status-badge"
+                    class="status-badge status-ready"
+                >
+                    数据已就绪
+                </span>
+
+            </div>
+
+
+            <form
+                id="report-config-form"
+                class="report-config-form"
+            >
+
+                <div class="form-field">
+
+                    <label for="report-date">
+                        报告日期
+                    </label>
+
+                    <input
+                        type="date"
+                        id="report-date"
+                        name="report_date"
+                    >
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="report-period">
+                        分析周期
+                    </label>
+
+                    <select
+                        id="report-period"
+                        name="period"
+                    >
+                        <option value="7d" selected>
+                            近7日
+                        </option>
+
+                        <option value="14d">
+                            近14日
+                        </option>
+
+                        <option value="30d">
+                            近30日
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="base-currency">
+                        基准货币
+                    </label>
+
+                    <select
+                        id="base-currency"
+                        name="base_currency"
+                    >
+                        <option value="USD" selected>
+                            USD 美元
+                        </option>
+
+                        <option value="CNY">
+                            CNY 人民币
+                        </option>
+
+                        <option value="EUR">
+                            EUR 欧元
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="model-provider">
+                        分析模型
+                    </label>
+
+                    <select
+                        id="model-provider"
+                        name="model_provider"
+                    >
+                        <option value="ollama">
+                            Ollama 本地模型
+                        </option>
+
+                        <option value="bailian">
+                            阿里云百炼
+                        </option>
+                    </select>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- 系统运行状态 -->
+        <section
+            id="generation-status-panel"
+            class="generation-status-panel"
+            aria-live="polite"
+        >
+
+            <div class="status-icon">
+                <span></span>
+            </div>
+
+            <div class="status-content">
+
+                <strong id="generation-status-title">
+                    等待生成日报
+                </strong>
+
+                <p id="generation-status-message">
+                    请选择报告日期、分析周期和模型后生成报告。
+                </p>
+
+            </div>
+
+            <div
+                id="generation-progress"
+                class="generation-progress"
+                hidden
+            >
+                <div
+                    id="generation-progress-bar"
+                    class="generation-progress-bar"
+                ></div>
+            </div>
+
+        </section>
+
+
+        <!-- 日报预览区 -->
+        <article
+            id="report-preview"
+            class="report-preview"
+        >
+
+            <!-- 日报封面信息 -->
+            <header class="report-cover">
+
+                <div>
+
+                    <p class="report-category">
+                        FOREIGN EXCHANGE DAILY REPORT
+                    </p>
+
+                    <h2>
+                        主要货币汇率每日分析报告
+                    </h2>
+
+                    <p class="report-subtitle">
+                        主要货币对走势、波动情况与风险提示
+                    </p>
+
+                </div>
+
+                <div class="report-meta">
+
+                    <div class="report-meta-item">
+                        <span>报告日期</span>
+
+                        <strong id="preview-report-date">
+                            暂未生成
+                        </strong>
+                    </div>
+
+                    <div class="report-meta-item">
+                        <span>数据周期</span>
+
+                        <strong id="preview-report-period">
+                            近7日
+                        </strong>
+                    </div>
+
+                    <div class="report-meta-item">
+                        <span>生成模型</span>
+
+                        <strong id="preview-model-name">
+                            暂未调用
+                        </strong>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- 核心指标卡片 -->
+            <section
+                class="report-section"
+                aria-labelledby="summary-title"
+            >
+
+                <div class="report-section-heading">
+
+                    <div>
+                        <span class="report-section-number">
+                            01
+                        </span>
+
+                        <h3 id="summary-title">
+                            市场概览
+                        </h3>
+                    </div>
+
+                    <p>
+                        近7日主要货币表现
+                    </p>
+
+                </div>
+
+
+                <div class="metric-grid">
+
+                    <div class="metric-card">
+
+                        <span class="metric-label">
+                            表现最强货币
+                        </span>
+
+                        <strong id="strongest-currency">
+                            --
+                        </strong>
+
+                        <span
+                            id="strongest-currency-change"
+                            class="metric-change"
+                        >
+                            --
+                        </span>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <span class="metric-label">
+                            表现最弱货币
+                        </span>
+
+                        <strong id="weakest-currency">
+                            --
+                        </strong>
+
+                        <span
+                            id="weakest-currency-change"
+                            class="metric-change"
+                        >
+                            --
+                        </span>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <span class="metric-label">
+                            波动最高货币对
+                        </span>
+
+                        <strong id="highest-volatility-pair">
+                            --
+                        </strong>
+
+                        <span
+                            id="highest-volatility-value"
+                            class="metric-change"
+                        >
+                            --
+                        </span>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <span class="metric-label">
+                            数据更新时间
+                        </span>
+
+                        <strong id="latest-update-time">
+                            --
+                        </strong>
+
+                        <span class="metric-note">
+                            数据库最新记录
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- 汇率走势图 -->
+            <section
+                class="report-section"
+                aria-labelledby="trend-chart-title"
+            >
+
+                <div class="report-section-heading">
+
+                    <div>
+                        <span class="report-section-number">
+                            02
+                        </span>
+
+                        <h3 id="trend-chart-title">
+                            主要货币对走势
+                        </h3>
+                    </div>
+
+                    <div class="chart-toolbar">
+
+                        <button
+                            type="button"
+                            class="chart-filter-button active"
+                            data-pair="all"
+                        >
+                            全部
+                        </button>
+
+                        <button
+                            type="button"
+                            class="chart-filter-button"
+                            data-pair="EURUSD"
+                        >
+                            EUR/USD
+                        </button>
+
+                        <button
+                            type="button"
+                            class="chart-filter-button"
+                            data-pair="USDJPY"
+                        >
+                            USD/JPY
+                        </button>
+
+                        <button
+                            type="button"
+                            class="chart-filter-button"
+                            data-pair="USDCNY"
+                        >
+                            USD/CNY
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="main-trend-chart"
+                    class="chart-container"
+                >
+                    <div class="empty-state">
+
+                        <span class="empty-state-icon">
+                            📈
+                        </span>
+
+                        <strong>
+                            汇率趋势图将在这里生成
+                        </strong>
+
+                        <p>
+                            图表数据将由后端接口提供。
+                        </p>
+
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- 数据表格 -->
+            <section
+                class="report-section"
+                aria-labelledby="currency-table-title"
+            >
+
+                <div class="report-section-heading">
+
+                    <div>
+                        <span class="report-section-number">
+                            03
+                        </span>
+
+                        <h3 id="currency-table-title">
+                            货币对统计数据
+                        </h3>
+                    </div>
+
+                    <p>
+                        最新汇率、区间变化与波动率
+                    </p>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table class="report-table">
+
+                        <thead>
+                            <tr>
+                                <th>货币对</th>
+                                <th>最新汇率</th>
+                                <th>7日最高</th>
+                                <th>7日最低</th>
+                                <th>区间涨跌</th>
+                                <th>波动率</th>
+                                <th>趋势</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="currency-table-body">
+
+                            <tr class="table-empty-row">
+                                <td colspan="7">
+                                    暂无数据，请先生成日报。
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- AI市场分析 -->
+            <section
+                class="report-section"
+                aria-labelledby="ai-analysis-title"
+            >
+
+                <div class="report-section-heading">
+
+                    <div>
+                        <span class="report-section-number">
+                            04
+                        </span>
+
+                        <h3 id="ai-analysis-title">
+                            AI市场分析
+                        </h3>
+                    </div>
+
+                    <span class="ai-label">
+                        AI GENERATED
+                    </span>
+
+                </div>
+
+
+                <div class="analysis-grid">
+
+                    <div class="analysis-card">
+
+                        <h4>
+                            市场表现总结
+                        </h4>
+
+                        <div
+                            id="market-summary"
+                            class="analysis-content"
+                        >
+                            <p>
+                                日报生成后，大模型将根据统计数据输出市场表现总结。
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="analysis-card">
+
+                        <h4>
+                            主要货币对分析
+                        </h4>
+
+                        <div
+                            id="currency-analysis"
+                            class="analysis-content"
+                        >
+                            <p>
+                                此处将展示主要货币对的趋势、区间变化和波动特征。
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="analysis-card">
+
+                        <h4>
+                            影响因素分析
+                        </h4>
+
+                        <div
+                            id="factor-analysis"
+                            class="analysis-content"
+                        >
+                            <p>
+                                此处将展示由模型生成的市场影响因素分析。
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="analysis-card">
+
+                        <h4>
+                            后续关注事项
+                        </h4>
+
+                        <div
+                            id="market-outlook"
+                            class="analysis-content"
+                        >
+                            <p>
+                                此处将展示下一阶段建议关注的汇率变化。
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- 风险提示 -->
+            <section
+                class="report-section risk-section"
+                aria-labelledby="risk-title"
+            >
+
+                <div class="report-section-heading">
+
+                    <div>
+                        <span class="report-section-number">
+                            05
+                        </span>
+
+                        <h3 id="risk-title">
+                            汇率风险提示
+                        </h3>
+                    </div>
+
+                    <span class="risk-level-badge">
+                        待评估
+                    </span>
+
+                </div>
+
+
+                <ul
+                    id="risk-alert-list"
+                    class="risk-alert-list"
+                >
+                    <li>
+                        暂未生成风险提示。
+                    </li>
+                </ul>
+
+            </section>
+
+
+            <!-- 数据说明 -->
+            <footer class="report-footer">
+
+                <div>
+                    <strong>
+                        数据来源
+                    </strong>
+
+                    <p id="report-data-source">
+                        本地汇率数据库
+                    </p>
+                </div>
+
+                <div>
+                    <strong>
+                        生成时间
+                    </strong>
+
+                    <p id="report-generated-time">
+                        暂未生成
+                    </p>
+                </div>
+
+                <div>
+                    <strong>
+                        免责声明
+                    </strong>
+
+                    <p>
+                        本报告仅用于数据分析与业务参考，
+                        不构成任何投资或交易建议。
+                    </p>
+                </div>
+
+            </footer>
+
+        </article>
+
+
+        <!-- 文件导出区 -->
+        <section class="export-panel">
+
+            <div>
+
+                <p class="section-kicker">
+                    EXPORT REPORT
+                </p>
+
+                <h2>
+                    导出与进一步编辑
+                </h2>
+
+                <p>
+                    将当前日报导出为 Word 或 PDF 文件。
+                </p>
+
+            </div>
+
+            <div class="export-actions">
+
+                <button
+                    type="button"
+                    id="export-word-button"
+                    class="button button-secondary"
+                    disabled
+                >
+                    导出 Word
+                </button>
+
+                <button
+                    type="button"
+                    id="export-pdf-button"
+                    class="button button-primary"
+                    disabled
+                >
+                    导出 PDF
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- 网站页脚 -->
+    <footer class="footer">
+
+        <p>
+            Louis Exchange Rate Dashboard
+        </p>
+
+        <p>
+            Data Engineering · Statistical Analysis · AI Report
+        </p>
+
+    </footer>
+
+
+    <script
+        src="../js/report.js"
+        defer
+    ></script>
+
+</body>
+
+</html>
