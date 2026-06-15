@@ -1,53 +1,53 @@
 // ===== 货币配置 =====
 
 const CURRENCY_META = {
-    USD: { name: "美元", flag: "🇺🇸" },
-    EUR: { name: "欧元", flag: "🇪🇺" },
-    GBP: { name: "英镑", flag: "🇬🇧" },
-    AUD: { name: "澳元", flag: "🇦🇺" },
-    CAD: { name: "加拿大元", flag: "🇨🇦" },
+    USD: { name: "美元"},
+    EUR: { name: "欧元"},
+    GBP: { name: "英镑"},
+    AUD: { name: "澳元"},
+    CAD: { name: "加拿大元"},
 
-    CNY: { name: "人民币", flag: "🇨🇳" },
-    JPY: { name: "日元", flag: "🇯🇵" },
-    KRW: { name: "韩元", flag: "🇰🇷" },
-    HKD: { name: "港元", flag: "🇭🇰" },
-    TWD: { name: "新台币", flag: "🌏" },
-    RUB: { name: "俄罗斯卢布", flag: "🇷🇺" },
-    VND: { name: "越南盾", flag: "🇻🇳" },
-    THB: { name: "泰铢", flag: "🇹🇭" },
-    MMK: { name: "缅甸元", flag: "🇲🇲" },
-    SGD: { name: "新加坡元", flag: "🇸🇬" },
-    MYR: { name: "马来西亚林吉特", flag: "🇲🇾" },
-    INR: { name: "印度卢比", flag: "🇮🇳" },
-    PKR: { name: "巴基斯坦卢比", flag: "🇵🇰" },
-    IDR: { name: "印尼盾", flag: "🇮🇩" },
+    CNY: { name: "人民币"},
+    JPY: { name: "日元"},
+    KRW: { name: "韩元"},
+    HKD: { name: "港元"},
+    TWD: { name: "新台币"},
+    RUB: { name: "俄罗斯卢布"},
+    VND: { name: "越南盾"},
+    THB: { name: "泰铢"},
+    MMK: { name: "缅甸元"},
+    SGD: { name: "新加坡元"},
+    MYR: { name: "马来西亚林吉特"},
+    INR: { name: "印度卢比"},
+    PKR: { name: "巴基斯坦卢比"},
+    IDR: { name: "印尼盾"},
 
-    AED: { name: "阿联酋迪拉姆", flag: "🇦🇪" },
-    SAR: { name: "沙特里亚尔", flag: "🇸🇦" },
-    OMR: { name: "阿曼里亚尔", flag: "🇴🇲" },
-    QAR: { name: "卡塔尔里亚尔", flag: "🇶🇦" },
-    BHD: { name: "巴林第纳尔", flag: "🇧🇭" },
+    AED: { name: "阿联酋迪拉姆"},
+    SAR: { name: "沙特里亚尔"},
+    OMR: { name: "阿曼里亚尔"},
+    QAR: { name: "卡塔尔里亚尔"},
+    BHD: { name: "巴林第纳尔"},
 
-    BRL: { name: "巴西雷亚尔", flag: "🇧🇷" },
-    ARS: { name: "阿根廷比索", flag: "🇦🇷" },
-    CUP: { name: "古巴比索", flag: "🇨🇺" },
-    CLP: { name: "智利比索", flag: "🇨🇱" },
-    PEN: { name: "秘鲁索尔", flag: "🇵🇪" },
+    BRL: { name: "巴西雷亚尔"},
+    ARS: { name: "阿根廷比索"},
+    CUP: { name: "古巴比索"},
+    CLP: { name: "智利比索"},
+    PEN: { name: "秘鲁索尔"},
 
-    KES: { name: "肯尼亚先令", flag: "🇰🇪" },
-    NGN: { name: "尼日利亚奈拉", flag: "🇳🇬" },
-    EGP: { name: "埃及镑", flag: "🇪🇬" },
-    TND: { name: "突尼斯第纳尔", flag: "🇹🇳" },
-    CDF: { name: "刚果法郎", flag: "🇨🇩" },
-    DZD: { name: "阿尔及利亚第纳尔", flag: "🇩🇿" },
-    BIF: { name: "布隆迪法郎", flag: "🇧🇮" },
-    GHS: { name: "加纳塞地", flag: "🇬🇭" },
-    SDG: { name: "苏丹镑", flag: "🇸🇩" },
-    TZS: { name: "坦桑尼亚先令", flag: "🇹🇿" },
-    UGX: { name: "乌干达先令", flag: "🇺🇬" },
-    AOA: { name: "安哥拉宽扎", flag: "🇦🇴" },
-    BWP: { name: "博茨瓦纳普拉", flag: "🇧🇼" },
-    ZAR: { name: "南非兰特", flag: "🇿🇦" }
+    KES: { name: "肯尼亚先令"},
+    NGN: { name: "尼日利亚奈拉"},
+    EGP: { name: "埃及镑"},
+    TND: { name: "突尼斯第纳尔"},
+    CDF: { name: "刚果法郎"},
+    DZD: { name: "阿尔及利亚第纳尔"},
+    BIF: { name: "布隆迪法郎"},
+    GHS: { name: "加纳塞地"},
+    SDG: { name: "苏丹镑"},
+    TZS: { name: "坦桑尼亚先令"},
+    UGX: { name: "乌干达先令"},
+    AOA: { name: "安哥拉宽扎"},
+    BWP: { name: "博茨瓦纳普拉"},
+    ZAR: { name: "南非兰特"}
 };
 
 
@@ -113,7 +113,7 @@ function populateCurrencySelect(selectElement) {
         .map(([code, item]) => {
             return `
                 <option value="${code}">
-                    ${item.flag} ${code} - ${item.name}
+                    ${code} - ${item.name}
                 </option>
             `;
         })
@@ -165,16 +165,6 @@ function showResult(data) {
     document.getElementById(
         "result-date"
     ).textContent = data.date;
-
-    document.getElementById(
-        "base-flag"
-    ).textContent =
-        CURRENCY_META[data.base]?.flag || "🌍";
-
-    document.getElementById(
-        "target-flag"
-    ).textContent =
-        CURRENCY_META[data.target]?.flag || "🌍";
 
     document.getElementById(
         "base-code"
